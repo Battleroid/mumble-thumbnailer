@@ -1,6 +1,6 @@
 {
   "name": "Mumble-thumbnailer",
   "tagline": "Produce thumbnails for links in mumble text chat.",
-  "body": "# mumble-thumbnailer\r\n\r\nBot that sits around and thumbnails your image links for mumble's text chat. Why? Because it's annoying doing it yourself.\r\n\r\n### Sample\r\n\r\nDemonstration video [here](sample.webm).",
+  "body": "# mumble-thumbnailer\r\n\r\nBot that sits around and thumbnails your image links for mumble's text chat. Why? Because it's annoying doing it yourself.\r\n\r\n### Sample\r\n\r\nDemonstration video [here](https://github.com/Battleroid/mumble-thumbnailer/raw/master/sample.webm).",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
