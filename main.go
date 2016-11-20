@@ -14,7 +14,6 @@ import (
 	"image/png"
 	"log"
 	"net/http"
-	_ "net/http"
 	"strings"
 )
 
@@ -28,6 +27,7 @@ func main() {
 		Connect: func(e *gumble.ConnectEvent) {
 			// start processor queue
 			go processor(messages, found, done, e.Client)
+			log.Println("Started listening...")
 		},
 		TextMessage: func(e *gumble.TextMessageEvent) {
 			// send new message for processing if it contains protocol
@@ -83,7 +83,6 @@ func processor(messages chan string, found chan string, done chan bool, client *
 
 			// download photo
 			resp, err := http.Get(link)
-			defer resp.Body.Close()
 			if err != nil {
 				log.Fatal("Failed to fetch image")
 			}
@@ -98,6 +97,7 @@ func processor(messages chan string, found chan string, done chan bool, client *
 			case e == "gif":
 				photo, err = gif.Decode(resp.Body)
 			}
+			resp.Body.Close()
 			if err != nil {
 				log.Fatal("Error decoding image:", err)
 			}
