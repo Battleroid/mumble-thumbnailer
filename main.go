@@ -77,14 +77,16 @@ func processor(messages chan string, found chan string, done chan bool, client *
 			// check if extension is appropriate
 			good := inSlice(e, extensions)
 			if !good {
-				log.Fatal("Not in extension list")
+				log.Println("Skipping, not in extension list")
+				continue
 			}
 			format := "image/" + e
 
 			// download photo
 			resp, err := http.Get(link)
 			if err != nil {
-				log.Fatal("Failed to fetch image")
+				log.Println("Failed to fetch image")
+				continue
 			}
 
 			// resize photo to about 300px longest side
@@ -99,7 +101,8 @@ func processor(messages chan string, found chan string, done chan bool, client *
 			}
 			resp.Body.Close()
 			if err != nil {
-				log.Fatal("Error decoding image:", err)
+				log.Println("Error decoding image:", err)
+				continue
 			}
 
 			// TODO: Max file size should be parameter
@@ -111,7 +114,8 @@ func processor(messages chan string, found chan string, done chan bool, client *
 			buf := new(bytes.Buffer)
 			err = jpeg.Encode(buf, m, nil)
 			if err != nil {
-				log.Fatal("Error encoding image to JPEG")
+				log.Println("Error encoding image to JPEG")
+				continue
 			}
 			b64 := html.EscapeString(base64.StdEncoding.EncodeToString(buf.Bytes()))
 			payload := fmt.Sprintf("<img src=\"data:%s;base64,%s\"/>", format, b64)
